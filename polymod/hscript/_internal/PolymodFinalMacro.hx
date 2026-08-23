@@ -16,7 +16,8 @@ class PolymodFinalMacro
   static inline final METADATA_RESOURCE_NAME:String = 'PolymodFinalMacro_METADATA';
 
   public static inline function getFinals(fullPath:String):Array<String> {
-    return getAllFinals().get(fullPath) ?? [];
+    var res = getAllFinals().get(fullPath);
+    return res != null ? res : [];
   }
 
   public static inline function getFinalsOf(obj:Dynamic):Array<String> {
@@ -28,7 +29,8 @@ class PolymodFinalMacro
   }
 
   public static inline function getPrivateProperties(fullPath:String):Array<String> {
-    return getAllPrivateProperties().get(fullPath) ?? [];
+    var res = getAllPrivateProperties().get(fullPath);
+    return res != null ? res : [];
   }
 
   public static inline function getPrivatePropertiesOf(obj:Dynamic):Array<String> {
@@ -151,7 +153,11 @@ class PolymodFinalMacro
       }
     }
 
-    return result.concat(listFinalsOfClassType(classType?.superClass?.t?.get()));
+    var superT = null;
+    if (classType != null && classType.superClass != null) {
+      superT = classType.superClass.t.get();
+    }
+    return result.concat(listFinalsOfClassType(superT));
   }
 
   static function listPrivatesOfClassType(classType:Null<ClassType>):Array<String> {
@@ -186,7 +192,11 @@ class PolymodFinalMacro
       }
     }
 
-    return result.concat(listPrivatesOfClassType(classType?.superClass?.t?.get()));
+    var superT = null;
+    if (classType != null && classType.superClass != null) {
+      superT = classType.superClass.t.get();
+    }
+    return result.concat(listPrivatesOfClassType(superT));
   }
 
   static var calledBefore:Bool = false;
