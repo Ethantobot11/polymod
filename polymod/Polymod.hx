@@ -255,8 +255,8 @@ class Polymod
       }
     }
 
-    params.modIds ??= [];
-    params.dirs ??= [];
+    if (params.modIds == null) params.modIds = [];
+    if (params.dirs == null) params.dirs = [];
 
     if (params.fileSystemParams == null) params.fileSystemParams = {modRoot: modRoot};
     if (params.fileSystemParams.modRoot == null) params.fileSystemParams.modRoot = modRoot;
@@ -311,7 +311,7 @@ class Polymod
     if (!params.skipDependencyChecks)
     {
       sortedModsToLoad = DependencyUtil.sortByDependencies(modsToLoad, params.skipDependencyErrors);
-      sortedModsToLoad ??= [];
+      if (sortedModsToLoad == null) sortedModsToLoad = [];
     }
     else
     {
