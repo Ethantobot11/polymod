@@ -726,9 +726,11 @@ class Util
         // We assume that if we cannot get the class name then it must be an object
         #if hl
         // A bit hacky but it's what the HL implementation does too, except this one avoids a null access error.
-        obj.__name__ ?? 'Object';
+        var val = obj.__name__;
+        val != null ? val : 'Object';
         #else
-        Type.getClassName(obj) ?? 'Object';
+        var name = Type.getClassName(obj);
+        name != null ? name : 'Object';
         #end
       default:
         Std.string(type);
